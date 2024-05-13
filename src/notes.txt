@@ -1,0 +1,203 @@
+======================================FireBase=====================================
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+const firebaseConfig = {
+    apiKey: "AIzaSyAJPt88fPZn7lyuI_TR4APlHp7zWlm5qOc",
+    authDomain: "login-auth-8bdbd.firebaseapp.com",
+    projectId: "login-auth-8bdbd",
+    storageBucket: "login-auth-8bdbd.appspot.com",
+    messagingSenderId: "664554900615",
+    appId: "1:664554900615:web:e8c38d7eeb8b383ee9bc22"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth();
+export const db = getFirestore(app);
+export default app;
+
+======================================Login=====================================
+
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import './login-sign.css'
+
+function Login() {
+
+  const [formdata, setFromData] = useState({
+    email: '', password: ''
+  })
+
+  const HndlChange = (e) => {
+    setFromData({ ...formdata, [e.target.name]: e.target.value })
+  }
+
+  const HndelSubmit = (e) => {
+    e.preventDefault();
+  }
+
+  return (
+    <div className='LoginSignUpForm w-full h-svh text-black bg-white'>
+      <div className='devider_div flex flex-wrap justify-between items-center'>
+
+        <div className='leftSide lg:w-[70%] lg:block hidden'>
+          <img src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80" alt="img" loading='lazy' />
+        </div>
+
+        <div className='from_div p-5 lg:w-[30%] sm:w-[100%]'>
+          <div className='Headings_div'>
+            <img
+              src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT0AAAAwCAYAAABjcq33AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkM0MDc3REE1MDk2MTExRUZCNTdBRTIxNkRDNURFNzgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkM0MDc3REE2MDk2MTExRUZCNTdBRTIxNkRDNURFNzgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzQwNzdEQTMwOTYxMTFFRkI1N0FFMjE2REM1REU3ODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzQwNzdEQTQwOTYxMTFFRkI1N0FFMjE2REM1REU3ODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7AeI6ZAAAOJklEQVR42uxdTWwc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'
+              loading='lazy'
+              className='w w-1/2'
+            />
+            <h1 className=' text-5xl  py-3'>Login Here</h1>
+          </div>
+          <form onClick={HndelSubmit}>
+            <div className='inputBox mb-2'>
+              <span className='d block mb-1'>Email address*</span>
+              <input
+                type='email'
+                className='p-2 w-full border rounded-md focus:border-red-700'
+                value={formdata.email}
+                name='email'
+                onChange={HndlChange}
+                required />
+            </div>
+            <div className='inputBox'>
+              <span className='d block'>Password*</span>
+              <input
+                className='p-2 w-full border rounded-md focus:border-red-700'
+                type='password'
+                value={formdata.password}
+                name='password'
+                onChange={HndlChange}
+                required
+              />
+            </div>
+            <button className='btn py-2 w-1/3 bg-red-700 text-white block mt-2 rounded-md'>Login</button>
+            <p>Don't have an account? <Link to={'/signup'} className='text text-red-700'>Register</Link> </p>
+          </form>
+        </div>
+      </div>
+    </div >
+  )
+}
+
+export default Login
+
+======================================Sign-in=====================================
+
+import React, { useState } from 'react'
+import './login-sign.css'
+import { Link } from 'react-router-dom'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../firebase'
+import { doc, setDoc, } from 'firebase/firestore'
+
+
+function SignUp() {
+  const [formdata, setFromData] = useState({
+    fname: '', lname: '', email: '', password: ''
+  })
+  const [sucess, setSucess] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const HndlChange = (e) => {
+    setFromData({ ...formdata, [e.target.name]: e.target.value })
+  }
+
+  const HndelSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, formdata.email, formdata.password)
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, "User", user.uid), {
+          email: user.email,
+          // email: formdata.email,
+          firstname: formdata.fname,
+          lastname: formdata.lname,
+          lastname: formdata.password,
+        })
+      }
+      setSucess('Register Successfully')
+    } catch (error) {
+      setErrorMsg(error.message)
+    }
+  }
+  console.log(errorMsg);
+
+  return (
+    <div className='LoginSignUpForm w-full h-svh text-black bg-white'>
+      <div className='devider_div flex flex-wrap justify-between items-center'>
+
+        <div className='leftSide lg:w-[70%] lg:block hidden'>
+          <img src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80" alt="img" loading='lazy' />
+        </div>
+
+        <div className='from_div p-5 lg:w-[30%] sm:w-[100%]'>
+          <div className='Headings_div'>
+            <img
+              src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT0AAAAwCAYAAABjcq33AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkM0MDc3REE1MDk2MTExRUZCNTdBRTIxNkRDNURFNzgwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkM0MDc3REE2MDk2MTExRUZCNTdBRTIxNkRDNURFNzgwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QzQwNzdEQTMwOTYxMTFFRkI1N0FFMjE2REM1REU3ODAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QzQwNzdEQTQwOTYxMTFFRkI1N0FFMjE2REM1REU3ODAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7AeI6ZAAAOJklEQVR42uxdTWwc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'
+              loading='lazy'
+              className='w w-1/2'
+            />
+            <h1 className=' text-5xl  py-3'>Sign-Up Here</h1>
+            {sucess ? <p className='py-3'>{sucess} <Link to={'/login'} className='text text-red-700'>Login</Link>  </p> : ''}
+            {errorMsg ? <p className='py-3'>{errorMsg} </p> : ''}
+          </div>
+          <form onClick={HndelSubmit}>
+            <div className='inputBox mb-2'>
+              <span className='d block mb-1'>First Name*</span>
+              <input
+                type='text'
+                className='p-2 w-full border rounded-md focus:border-red-700'
+                onChange={HndlChange}
+                value={formdata.fname}
+                name='fname'
+                required />
+            </div>
+            <div className='inputBox mb-2'>
+              <span className='d block mb-1'>Last Name*</span>
+              <input
+                type='text'
+                className='p-2 w-full border rounded-md focus:border-red-700'
+                onChange={HndlChange}
+                value={formdata.lname}
+                name='lname'
+                required />
+            </div>
+            <div className='inputBox mb-2'>
+              <span className='d block mb-1'>Email address*</span>
+              <input
+                type='email'
+                className='p-2 w-full border rounded-md focus:border-red-700'
+                onChange={HndlChange}
+                value={formdata.email}
+                name='email'
+                required />
+            </div>
+            <div className='inputBox'>
+              <span className='d block'>Password*</span>
+              <input
+                className='p-2 w-full border rounded-md focus:border-red-700'
+                type='password'
+                onChange={HndlChange}
+                value={formdata.password}
+                name='password'
+                required
+              />
+            </div>
+            <button className='btn py-2 w-1/3 bg-red-700 text-white block mt-2 rounded-md'>Sign-In</button>
+            <p>Already have an account? <Link to={'/login'} className='text text-red-700'>Login</Link> </p>
+          </form>
+        </div>
+      </div>
+    </div >
+  )
+}
+
+export default SignUp
