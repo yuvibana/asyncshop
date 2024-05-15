@@ -2,20 +2,30 @@ import React, { useState } from 'react'
 import Logo from '../../assets/logo.png'
 import '../LoginSignUp/LoginSignUp.css'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../Firebase'
 
 function Login() {
 
   const [formdata, setFromData] = useState({
     email: '', password: ''
   })
+  const Navigate = useNavigate()
 
   const HndlChange = (e) => {
     setFromData({ ...formdata, [e.target.name]: e.target.value })
   }
 
-  const HndelSubmit = (e) => {
+  const HndelSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, formdata.email, formdata.password)
+      Navigate('/profile')
+      // console.log('login succesfully');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
