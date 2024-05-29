@@ -1,50 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-
 export const fetchProducts = createAsyncThunk(
     'home/fetchProducts',
-    async ({ page = 1, category = '', search = '' }, thunkAPI) => {
-        const response = await fetch(
-            `https://fakestoreapi.com/products/${page}&category=${category}&search=${search}`
-            // `https://fakestoreapi.com/products/`
-        );
-        const data = await response.json();
-        return data.products;
+    async ({ totalPage = 1, category = '', search = '' }, thunkAPI) => {
+        let url = `https://fakestoreapi.com/products`;
+
+        if (category && category !== 'all') {
+            url += `/category/${category}`;
+        }
+
+        const response = await fetch(url);
+        let data = await response.json();
+
+        if (search) {
+            data = data.filter(product =>
+                product.title.toLowerCase().includes(search.toLowerCase())
+            );
+        }
+
+        return data;
     }
 );
 
-
-// export const fetchProducts = createAsyncThunk(
-//     'home/fetchProducts',
-//     async ({ totalPage = 1, category = '', search = '' }, thunkAPI) => {
-//         let url = `https://fakestoreapi.com/products`
-//         const response = await fetch(url);
-//         const data = await response.json();
-
-
-//         if (category) {
-//             url += `/category/${category}`;
-//         }
-
-//         if (totalPage) {
-//             url += `/${totalPage}`;
-//         }
-
-//         if (search) {
-//             return data.filter(product =>
-//                 product.title.toLowerCase().includes(search.toLowerCase())
-//             );
-//         }
-
-//         console.log(data);
-
-//         return data;
-//     }
-// );
-
 const initialState = {
     products: [],
-    filteredProducts: [],
     status: 'idle',
     error: null,
     category: 'all',

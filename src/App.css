@@ -3,4 +3,5 @@
 @tailwind utilities;
 
 /* App */
-.App{min-height: 100vh; background: #141a1e;}
+.App{min-height: 100vh; background: #000000e7;}
+button, select{cursor: pointer;}
