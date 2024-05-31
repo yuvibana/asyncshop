@@ -11,6 +11,7 @@ const {
   Register,
   Profile,
   Home,
+  Cart,
   CheckOut,
   NotFound,
 } = ComponetRoot;
@@ -28,12 +29,13 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path='/' element=<Layout />>
+        <Route path='/' element={<Layout />}>
           <Route path='/' element={user ? <Navigate to='/profile' /> : <Login />} />
           <Route path='login/' element={<Login />} />
           <Route path='register/' element={<Register />} />
           <Route path='profile/' element={<Profile />} />
           <Route path='Home/' element={<Home />} />
+          <Route path='Cart/' element={<Cart />} />
         </Route>
       </Routes>
     </div>

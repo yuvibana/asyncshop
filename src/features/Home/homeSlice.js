@@ -4,20 +4,10 @@ export const fetchProducts = createAsyncThunk(
     'home/fetchProducts',
     async ({ totalPage = 1, category = '', search = '' }, thunkAPI) => {
         let url = `https://fakestoreapi.com/products`;
-
-        if (category && category !== 'all') {
-            url += `/category/${category}`;
-        }
-
+        if (category && category !== 'all') { url += `/category/${category}`; }
         const response = await fetch(url);
         let data = await response.json();
-
-        if (search) {
-            data = data.filter(product =>
-                product.title.toLowerCase().includes(search.toLowerCase())
-            );
-        }
-
+        if (search) { data = data.filter(product => product.title.toLowerCase().includes(search.toLowerCase())); }
         return data;
     }
 );
