@@ -18,7 +18,7 @@ function Filter() {
             <select
                 value={category}
                 onChange={handleCategoryChange}
-                className="p-2 border border-gray-300 rounded"
+                className="p-2 w-full border border-gray-300 outline-0 rounded bg-white text-gray-500"
             >
                 <option value="all">All Categories</option>
                 <option value="electronics">Electronics</option>

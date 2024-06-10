@@ -32,7 +32,7 @@ function ProductList() {
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
-        Navigate('../cart/');
+        // Navigate('../cart/');
     };
 
     if (status === 'loading') {
@@ -40,59 +40,63 @@ function ProductList() {
     }
 
     if (status === 'failed') {
-        return <div className='text-3xl text-white text-center'>{error}</div>;
+        return <div className='text-3xl text-gray-900 text-center'>{error}</div>;
     }
 
     return (
-        <div className='product_listing_main max-w-[1440px] m-auto p-[0 15px] text-white'>
+        <div className='product_listing_main max-w-[1440px] m-auto p-[0 15px] text-gray-900'>
             {currentProducts.length === 0 ? (
-                <div>No products found.</div>
+                <div className='text-center text-3xl'>No products found.</div>
             ) : (
-                <div className={`procuct_card_main flex flex-wrap gap-5 transition-opacity duration-500 ${animate ? 'opacity-0' : 'opacity-100'}`}>
-                    {currentProducts.map(product => (
-                        <div className='procuct_card_inner flex flex-wrap gap-3 lg:w-[49%] w-[100%]' key={product.id}>
-                            <figure
-                                style={{ lineHeight: '0' }}
-                                className='lg:w-[50%] w-[100%]'
-                            ><img src={product.image} className='w-[100%] h-[300px]' alt="" loading='lazy' /></figure>
-                            <div className='content_div lg:w-[48%] w-[100%]'>
-                                <div className='product_title text-2xl'>{product.title}</div>
-                                <p>{product.description.slice(1,150)}</p>
-                                <div className='price flex gap-4 mb-2'>
-                                    <span className='price text-2xl line-through text-gray-500'>&#x20B9; {product.price - 10}</span>
-                                    <span className='price text-2xl'>&#x20B9; {product.price}/-</span>
-                                </div>
-                                <div className='buy_btns flex gap-4'>
-                                    <button
-                                        className='bg-red-700 inline-block py-1 px-4 rounded-sm transition hover:bg-red-800'
-                                        onClick={() => handleAddToCart(product)}
-                                    >Add To Cart</button>
-                                    <button
-                                        className='bg-red-700 inline-block py-1 px-4 rounded-sm transition hover:bg-red-800'
-                                    >Buy Now</button>
+                <>
+                    <div className={`procuct_card_main flex flex-wrap gap-5 transition-opacity duration-500 ${animate ? 'opacity-0' : 'opacity-100'}`}>
+                        {currentProducts.map(product => (
+                            <div className='procuct_card_inner flex flex-wrap gap-3 lg:w-[49%] w-[100%] transition' key={product.id}>
+                                <figure
+                                    style={{ lineHeight: '0' }}
+                                    className='lg:w-[49%] w-[100%]'
+                                ><img src={product.image} className='w-[100%] h-[300px]' alt="" loading='lazy' /></figure>
+                                <div className='content_div lg:w-[48%] w-[100%]'>
+                                    <div className='product_title text-2xl'>{product.title}</div>
+                                    <p>{product.description.slice(1, 150)}</p>
+                                    <div className='price flex gap-4 mb-2'>
+                                        <span className='price text-2xl line-through text-gray-500'>&#x20B9; {Math.ceil(product.price)}</span>
+                                        <span className='price text-2xl'>&#x20B9; {Math.ceil(product.price - 10)}/-</span>
+                                    </div>
+                                    <div className='buy_btns flex gap-4'>
+                                        <button
+                                            className='bg-red-700 inline-block py-1 px-4 rounded text-white transition hover:bg-red-800'
+                                            onClick={() => handleAddToCart(product)}
+                                        >Add To Cart</button>
+                                        <button
+                                            disabled
+                                            className='bg-red-700 inline-block py-1 px-4 rounded text-white transition hover:bg-red-800 disabled:opacity-50 disabled:cursor-no-drop'
+                                        >Buy Now</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                    <div className='flex justify-center gap-3 mt-5'>
+                        <button
+                            className='bg-red-700 inline-block py-1 px-4 hover:bg-red-800 rounded-sm text-white disabled:opacity-50 disabled:cursor-no-drop'
+                            onClick={() => dispatch(setPage(currentPage - 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                        <span className='text-gray-900'>{currentPage} / {totalPages}</span>
+                        <button
+                            className='bg-red-700 inline-block py-1 px-4 hover:bg-red-800 rounded-sm text-white disabled:opacity-50 disabled:cursor-no-drop'
+                            onClick={() => dispatch(setPage(currentPage + 1))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </>
             )}
-            <div className='flex gap-3 my-2'>
-                <button
-                    className='bg-red-700 inline-block py-1 px-4 hover:bg-red-800 rounded-sm disabled:opacity-50 disabled:cursor-no-drop'
-                    onClick={() => dispatch(setPage(currentPage - 1))}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                <span className='text-white'>{currentPage} / {totalPages}</span>
-                <button
-                    className='bg-red-700 inline-block py-1 px-4 hover:bg-red-800 rounded-sm disabled:opacity-50 disabled:cursor-no-drop'
-                    onClick={() => dispatch(setPage(currentPage + 1))}
-                    disabled={currentPage === totalPages}
-                >
-                    Next
-                </button>
-            </div>
+
         </div>
     );
 }

@@ -3,5 +3,21 @@
 @tailwind utilities;
 
 /* App */
-.App{min-height: 100vh; background: #000000e7;}
-button, select{cursor: pointer;}
+.App {}
+.app_header{
+    &.active {position: fixed;left: 0;right: 0;z-index: 9; animation: slide-down 0.9s;}
+}
+
+button, select {cursor: pointer;}
+.procuct_card_inner {box-shadow: 1px 1px 2px rgb(203 203 203);padding: 15px;border-radius: 5px;
+    &:hover{box-shadow: 2px 3px 4px rgb(203 203 203);animation: procuct_card_anim 0.9s;}
+}
+/* .cart_count{top: -17px; right: -15px;} */
+@keyframes slide-down {
+    from {opacity: 1;-webkit-transform: translateY(-100%);transform: translateY(-100%);}
+    to {opacity: 1;-webkit-transform: translateY(0);transform: translateY(0);}
+}
+@keyframes procuct_card_anim {
+    from{transform: translateY(-20%);}
+    from{transform: translateY(0);}
+}

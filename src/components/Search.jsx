@@ -13,20 +13,18 @@ function Search() {
     };
 
     return (
-        <div className="mb-4">
+        <div className="mb-4 flex">
             <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search products..."
-                className="p-2 border border-gray-300 rounded mr-2"
+                className="p-2 outline-0 border border-gray-300 rounded mr-2 w-[70%]"
             />
             <button
                 onClick={handleSearch}
-                className="bg-blue-500 text-white py-2 px-4 rounded"
-            >
-                Search
-            </button>
+                className='bg-red-700 inline-block py-1 px-4 rounded text-white transition hover:bg-red-800 w-[30%]'
+            >Search</button>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { auth, db } from '../../Firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 function Profile() {
     const [userDetail, setUserDetail] = useState(null);
@@ -43,15 +44,21 @@ function Profile() {
                 {
                     userDetail ? (
                         <>
-                            <h1 className='text-3xl capitalize'> Welcome {userDetail.firstname}</h1>
+                            <h1 className='text-3xl capitalize border-b border-b-black-200'> Welcome {userDetail.firstname}</h1>
                             <div className='content'>
-                                <p className='text-2xl py-1 capitalize'>Email : {userDetail.email}</p>
-                                <p className='text-2xl py-1 capitalize'>First Name : {userDetail.firstname}</p>
-                                <p className='text-2xl py-1 capitalize'>Last Name : {userDetail.lastname}</p>
-                                <button
-                                    className='btn py-2 w-1/3 bg-red-700 text-white block mt-2 rounded-md'
-                                    onClick={hndleLogOut}
-                                >Log-Out</button>
+                                <p className='text-2xl py-1 capitalize border-b border-b-black-200'>Email : {userDetail.email}</p>
+                                <p className='text-2xl py-1 capitalize border-b border-b-black-200'>First Name : {userDetail.firstname}</p>
+                                <p className='text-2xl py-1 capitalize border-b border-b-black-200'>Last Name : {userDetail.lastname}</p>
+                                <div className='btn_flex flex justify-between'>
+                                    <button
+                                        className='btn py-2 w-1/3 bg-red-700 text-white block mt-2 rounded-md text-center'
+                                        onClick={hndleLogOut}
+                                    >Log-Out</button>
+                                    <Link
+                                        to={'../home'}
+                                        className='btn py-2 w-1/3 bg-red-700 text-white block mt-2 rounded-md text-center'
+                                    >View Collection</Link>
+                                </div>
                             </div>
                         </>
                     ) : (

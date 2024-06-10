@@ -6,9 +6,33 @@ const initialState = {
     totalPrice: 0
 };
 
+// function to save Cart State to Local Storage 
+const saveCartToLocalStorage = (state) => {
+    try {
+        const serializedState = JSON.stringify(state);
+        localStorage.setItem('cart', serializedState);
+    } catch (e) {
+        console.error("Could not save cart", e);
+    }
+};
+
+// load cart State from Local Storage
+const loadCartFromLocalStorage = () => {
+    try {
+        const serializedState = localStorage.getItem('cart');
+        if (serializedState === null) {
+            return initialState;
+        }
+        return JSON.parse(serializedState);
+    } catch (e) {
+        console.error("Could not load cart", e);
+        return initialState;
+    }
+};
+
 const cartSlice = createSlice({
     name: 'cart',
-    initialState,
+    initialState: loadCartFromLocalStorage(),
     reducers: {
         addToCart: (state, action) => {
             const existingItem = state.items.find(item => item.id === action.payload.id);
@@ -24,6 +48,7 @@ const cartSlice = createSlice({
             }
             state.totalQuantity += 1;
             state.totalPrice += action.payload.price;
+            saveCartToLocalStorage(state);
         },
         removeFromCart: (state, action) => {
             const existingItem = state.items.find(item => item.id === action.payload);
@@ -32,6 +57,7 @@ const cartSlice = createSlice({
                 state.totalPrice -= existingItem.totalPrice;
                 state.items = state.items.filter(item => item.id !== action.payload);
             }
+            saveCartToLocalStorage(state);
         },
         incrementQuantity: (state, action) => {
             const existingItem = state.items.find(item => item.id === action.payload);
@@ -41,6 +67,7 @@ const cartSlice = createSlice({
                 state.totalQuantity += 1;
                 state.totalPrice += existingItem.price;
             }
+            saveCartToLocalStorage(state);
         },
         decrementQuantity: (state, action) => {
             const existingItem = state.items.find(item => item.id === action.payload);
@@ -54,11 +81,13 @@ const cartSlice = createSlice({
                 state.totalQuantity -= 1;
                 state.totalPrice -= existingItem.price;
             }
+            saveCartToLocalStorage(state);
         },
         clearCart: (state) => {
             state.items = [];
             state.totalQuantity = 0;
             state.totalPrice = 0;
+            saveCartToLocalStorage(state);
         }
     }
 });
